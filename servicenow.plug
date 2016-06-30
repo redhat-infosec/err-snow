@@ -1,0 +1,12 @@
+[Core]
+name = ServiceNow
+module = servicenow
+
+[Documentation]
+description = ServiceNow Integration
+
+[Python]
+version = 3
+
+[Errbot]
+
