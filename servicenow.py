@@ -75,7 +75,7 @@ class ServiceNow(BotPlugin):
         Keep track of the last time this callback was run
         """
         # Timezone that the bot is running in
-        bot_tz = pytz.timezone('Australia/Brisbane')
+        bot_tz = pytz.utc  # pytz.timezone('Australia/Brisbane')
         utc = pytz.utc
 
         now = dt.datetime.now()
