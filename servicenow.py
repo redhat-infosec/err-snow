@@ -83,7 +83,7 @@ class ServiceNow(BotPlugin):
         self['LAST_RUN'] = last_run.strftime('%Y%m%d%H%M%S')
 
     @botcmd
-    def issue(self, message, args):
+    def sn(self, message, args):
         """
         Retrieves information about an issue in ServiceNow. Provide a single INC or TASK number as an argument.
         """
