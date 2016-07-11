@@ -45,6 +45,7 @@ class ServiceNow(BotPlugin):
         except KeyError:
             # This is the first run. Set the last run time and watch for incoming tickets starting now
             self.set_last_run()
+            last_run = self['LAST_RUN']
 
         sysparm_query = 'sys_updated_on>{}^assigned_toISEMPTY'.format(last_run)
 
