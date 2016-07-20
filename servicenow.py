@@ -64,7 +64,7 @@ class ServiceNow(BotPlugin):
         results = response.json()['result']
         self.log.debug('{} results returned'.format(len(results)))
         for issue in results:
-            message = 'Incoming: ' + self.issue_details(issue)
+            message = 'ServiceNow: ' + self.issue_details(issue)
             for room in self.rooms():
                 self.send(room, message)
 
@@ -121,7 +121,7 @@ class ServiceNow(BotPlugin):
         """
         Return the relevant details formatted for output
         """
-        short_url = 'https://url.corp.redhat.com/' + issue['number']
+        short_url = 'https://url.corp.redhat.com/' + issue['number']  # TODO remove hardcoded URL
         # Convert sys_updated_on time field to UTC
         api_tz = pytz.timezone('US/Eastern')  # API account timezone
         utc = pytz.utc
@@ -129,12 +129,17 @@ class ServiceNow(BotPlugin):
         sys_updated_on = dt.datetime.strptime(issue['sys_updated_on'], date_format)
         utc_sys_updated_on = self.convert_tz(sys_updated_on, api_tz, utc)
 
+        # Readable update time
+        update_time = '{} {}'.format(utc_sys_updated_on.strftime(date_format), utc_sys_updated_on.tzname())
+
         return ' | '.join([
-            short_url,
-            issue['short_description'],
-            issue['sys_created_by'],
+            issue['number'],
             issue['state'],
-            '{} {}'.format(utc_sys_updated_on.strftime(date_format), utc_sys_updated_on.tzname())
+            issue['opened_by']['display_value'],
+            issue['assigned_to']['display_value'],
+            issue['short_description'],
+            update_time,
+            short_url
         ])
 
     @staticmethod
