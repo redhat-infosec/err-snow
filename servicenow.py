@@ -132,11 +132,15 @@ class ServiceNow(BotPlugin):
         # Readable update time
         update_time = '{} {}'.format(utc_sys_updated_on.strftime(date_format), utc_sys_updated_on.tzname())
 
+        assigned_to = ''
+        if issue['assigned_to']:
+            assigned_to = issue['assigned_to']['display_value']
+
         return ' | '.join([
             issue['number'],
             issue['state'],
             issue['opened_by']['display_value'],
-            issue['assigned_to']['display_value'],
+            assigned_to,
             issue['short_description'],
             update_time,
             short_url
